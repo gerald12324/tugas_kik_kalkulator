@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kalkulator Aritmatika Modern dengan HTML, CSS, dan JavaScript murni.">
+  <title>Kalkulator Keren & Modern | Belajar Logika JS</title>
+  
+  <!-- Font Modern dari Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Background glowing orbs untuk efek ambient modern -->
+  <div class="ambient-glow orb-1"></div>
+  <div class="ambient-glow orb-2"></div>
+  <div class="ambient-glow orb-3"></div>
+
+  <main class="calculator-wrapper">
+    <!-- Header Badge Info -->
+    <header class="calculator-header">
+      <div class="badge">
+        <span class="status-dot"></span>
+        <span>JavaScript Logic Lab</span>
+      </div>
+      <h1 class="calculator-title">Aesthetic Calculator</h1>
+      <p class="calculator-subtitle">Eksplorasi logika aritmatika dasar: Tambah, Kurang, Kali, Bagi</p>
+    </header>
+
+    <!-- Kalkulator Glassmorphism Container -->
+    <div class="calculator-card" id="calculator">
+      <!-- Layar Display Kalkulator -->
+      <section class="display-container" aria-label="Layar Kalkulator">
+        <!-- Riwayat operasi sebelumnya (contoh: 12 + 5) -->
+        <div class="previous-operand" id="previousOperand" aria-live="polite"></div>
+        <!-- Angka yang sedang diketik atau hasil akhir -->
+        <div class="current-operand" id="currentOperand" aria-live="polite">0</div>
+      </section>
+
+      <!-- Papan Tombol (Keypad) -->
+      <section class="keypad-grid" aria-label="Tombol Kalkulator">
+        <!-- Baris 1: Kontrol Reset & Hapus -->
+        <button type="button" class="btn btn-action" id="btnClear" data-action="clear" title="Reset Semua (C)">AC</button>
+        <button type="button" class="btn btn-action" id="btnDelete" data-action="delete" title="Hapus Angka Terakhir (Backspace)">DEL</button>
+        <button type="button" class="btn btn-action" id="btnToggleSign" data-action="toggle-sign" title="Ubah Positif / Negatif">±</button>
+        <button type="button" class="btn btn-operator" data-operator="÷" title="Bagi (/)">÷</button>
+
+        <!-- Baris 2 -->
+        <button type="button" class="btn btn-number" data-number="7">7</button>
+        <button type="button" class="btn btn-number" data-number="8">8</button>
+        <button type="button" class="btn btn-number" data-number="9">9</button>
+        <button type="button" class="btn btn-operator" data-operator="×" title="Kali (*)">×</button>
+
+        <!-- Baris 3 -->
+        <button type="button" class="btn btn-number" data-number="4">4</button>
+        <button type="button" class="btn btn-number" data-number="5">5</button>
+        <button type="button" class="btn btn-number" data-number="6">6</button>
+        <button type="button" class="btn btn-operator" data-operator="-" title="Kurang (-)">−</button>
+
+        <!-- Baris 4 -->
+        <button type="button" class="btn btn-number" data-number="1">1</button>
+        <button type="button" class="btn btn-number" data-number="2">2</button>
+        <button type="button" class="btn btn-number" data-number="3">3</button>
+        <button type="button" class="btn btn-operator" data-operator="+" title="Tambah (+)">+</button>
+
+        <!-- Baris 5 -->
+        <button type="button" class="btn btn-number btn-zero" data-number="0">0</button>
+        <button type="button" class="btn btn-number" data-action="decimal" title="Koma / Desimal">.</button>
+        <button type="button" class="btn btn-equals" id="btnEquals" data-action="equals" title="Hitung Hasil (=)">=</button>
+      </section>
+
+      <!-- Panel Riwayat Singkat (History Log) -->
+      <footer class="history-panel">
+        <div class="history-header">
+          <span class="history-title">Riwayat Hitungan</span>
+          <button type="button" class="btn-clear-history" id="btnClearHistory">Bersihkan</button>
+        </div>
+        <ul class="history-list" id="historyList">
+          <li class="history-empty">Belum ada riwayat perhitungan</li>
+        </ul>
+      </footer>
+    </div>
+
+    <!-- Petunjuk Keyboard & Logika Singkat -->
+    <aside class="quick-guide">
+      <div class="guide-item">
+        <kbd>Keyboard</kbd> <span>Mendukung angka 0-9, +, -, *, /, Enter, Backspace, dan Esc</span>
+      </div>
+    </aside>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

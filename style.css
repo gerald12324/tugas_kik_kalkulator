@@ -1,0 +1,509 @@
+/* ==========================================================================
+   DESIGN TOKENS & VARIABEL CSS
+   ========================================================================== */
+:root {
+  /* Palet Warna Premium (Modern Dark Slate + Vivid Indigo & Cyan) */
+  --bg-primary: #0a0d14;
+  --bg-surface: rgba(18, 24, 38, 0.72);
+  --bg-surface-hover: rgba(28, 37, 59, 0.85);
+  
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --border-glow: rgba(99, 102, 241, 0.4);
+  
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-accent: #818cf8;
+
+  /* Tombol Aksi & Operator */
+  --btn-num-bg: rgba(255, 255, 255, 0.05);
+  --btn-num-hover: rgba(255, 255, 255, 0.12);
+  --btn-num-active: rgba(255, 255, 255, 0.18);
+  
+  --btn-action-bg: rgba(244, 63, 94, 0.12);
+  --btn-action-text: #fda4af;
+  --btn-action-hover: rgba(244, 63, 94, 0.22);
+  
+  --btn-op-bg: rgba(99, 102, 241, 0.15);
+  --btn-op-text: #a5b4fc;
+  --btn-op-hover: rgba(99, 102, 241, 0.28);
+  --btn-op-active-glow: rgba(99, 102, 241, 0.5);
+
+  --btn-equals-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+  --btn-equals-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.5);
+
+  /* Typography */
+  --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'JetBrains Mono', monospace;
+
+  /* Shadows & Glassmorphism Blur */
+  --card-blur: blur(20px);
+  --card-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6), 
+                 0 0 0 1px var(--border-glass),
+                 inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  --radius-xl: 28px;
+  --radius-lg: 18px;
+  --radius-md: 14px;
+  --radius-sm: 8px;
+
+  /* Transisi Halus */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   RESET & DASAR
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  position: relative;
+  overflow-x: hidden;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   AMBIENT GLOWING ORBS (EFEK LATAR BELAKANG)
+   ========================================================================== */
+.ambient-glow {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+  animation: floatSlow 18s ease-in-out infinite alternate;
+}
+
+.orb-1 {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, #4f46e5 0%, rgba(79, 70, 229, 0) 70%);
+  top: -100px;
+  left: -100px;
+}
+
+.orb-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #06b6d4 0%, rgba(6, 182, 212, 0) 70%);
+  bottom: -120px;
+  right: -100px;
+  animation-duration: 22s;
+  animation-direction: alternate-reverse;
+}
+
+.orb-3 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, #c026d3 0%, rgba(192, 38, 211, 0) 70%);
+  top: 45%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  opacity: 0.2;
+}
+
+@keyframes floatSlow {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, -30px) scale(1.08); }
+  100% { transform: translate(-30px, 40px) scale(0.95); }
+}
+
+/* ==========================================================================
+   WRAPPER UTAMA
+   ========================================================================== */
+.calculator-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ==========================================================================
+   HEADER INFO
+   ========================================================================== */
+.calculator-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-accent);
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 10px #10b981;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.calculator-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.calculator-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   KARTU KALKULATOR (GLASSMORPHISM CARD)
+   ========================================================================== */
+.calculator-card {
+  background: var(--bg-surface);
+  backdrop-filter: var(--card-blur);
+  -webkit-backdrop-filter: var(--card-blur);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--card-shadow);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  position: relative;
+  border: 1px solid var(--border-glass);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.calculator-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ==========================================================================
+   DISPLAY LAYAR
+   ========================================================================== */
+.display-container {
+  background: rgba(10, 14, 23, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.25rem 1rem 1.25rem;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 110px;
+  word-break: break-all;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.previous-operand {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  min-height: 1.4rem;
+  letter-spacing: 0.05em;
+  transition: all var(--transition-fast);
+}
+
+.current-operand {
+  font-family: var(--font-display);
+  font-size: 2.35rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  transition: all var(--transition-fast);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================================================================
+   KEYPAD GRID
+   ========================================================================== */
+.keypad-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+/* Style Umum Tombol */
+.btn {
+  font-family: var(--font-main);
+  font-size: 1.2rem;
+  font-weight: 600;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  height: 60px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--text-accent);
+  outline-offset: 2px;
+}
+
+.btn:active, .btn.pressed {
+  transform: scale(0.94);
+}
+
+/* 1. Tombol Angka */
+.btn-number {
+  background: var(--btn-num-bg);
+  color: var(--text-main);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.btn-number:hover {
+  background: var(--btn-num-hover);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.btn-zero {
+  grid-column: span 2;
+}
+
+/* 2. Tombol Aksi (AC, DEL, ±) */
+.btn-action {
+  background: var(--btn-action-bg);
+  color: var(--btn-action-text);
+  border: 1px solid rgba(244, 63, 94, 0.2);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.btn-action:hover {
+  background: var(--btn-action-hover);
+  border-color: rgba(244, 63, 94, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(244, 63, 94, 0.2);
+}
+
+/* 3. Tombol Operator (+, -, *, /) */
+.btn-operator {
+  background: var(--btn-op-bg);
+  color: var(--btn-op-text);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  font-size: 1.4rem;
+  font-family: var(--font-display);
+}
+
+.btn-operator:hover {
+  background: var(--btn-op-hover);
+  border-color: rgba(99, 102, 241, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25);
+}
+
+/* Efek saat operator aktif dipilih */
+.btn-operator.active-operator {
+  background: #6366f1;
+  color: #ffffff;
+  border-color: #818cf8;
+  box-shadow: 0 0 20px var(--btn-op-active-glow);
+}
+
+/* 4. Tombol Sama Dengan (=) */
+.btn-equals {
+  background: var(--btn-equals-gradient);
+  color: #ffffff;
+  font-size: 1.5rem;
+  box-shadow: var(--btn-equals-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-weight: 700;
+}
+
+.btn-equals:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.12);
+  box-shadow: 0 12px 30px -3px rgba(99, 102, 241, 0.7);
+}
+
+/* ==========================================================================
+   PANEL RIWAYAT HITUNGAN (HISTORY)
+   ========================================================================== */
+.history-panel {
+  border-top: 1px solid var(--border-glass);
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.history-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.btn-clear-history {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.btn-clear-history:hover {
+  color: #fda4af;
+  background: rgba(244, 63, 94, 0.1);
+}
+
+.history-list {
+  list-style: none;
+  max-height: 90px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-right: 0.25rem;
+}
+
+/* Custom Scrollbar untuk riwayat */
+.history-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.history-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  padding: 0.3rem 0.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.history-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-main);
+}
+
+.history-item-result {
+  color: var(--text-accent);
+  font-weight: 600;
+}
+
+.history-empty {
+  font-size: 0.8rem;
+  color: rgba(148, 163, 184, 0.6);
+  text-align: center;
+  padding: 0.5rem 0;
+  font-style: italic;
+}
+
+/* ==========================================================================
+   PANDUAN KEYBOARD
+   ========================================================================== */
+.quick-guide {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.guide-item {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+kbd {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (MOBILE OPTIMIZATION)
+   ========================================================================== */
+@media (max-width: 480px) {
+  body {
+    padding: 1rem 0.75rem;
+  }
+
+  .calculator-card {
+    padding: 1.15rem;
+    border-radius: 22px;
+  }
+
+  .btn {
+    height: 52px;
+    font-size: 1.1rem;
+  }
+
+  .current-operand {
+    font-size: 1.95rem;
+  }
+}
